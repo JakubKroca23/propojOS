@@ -134,29 +134,32 @@ export const useOsStore = create<OsState>((set, get) => ({
         useEventStore.getState().setConnections(defaultConnections, false);
       }
 
-      // Initialize Appwrite Realtime listener for visual program changes
-      client.subscribe(
-        `databases.propojos_db.collections.os_configs.documents`,
-        (response) => {
-          const updatedDoc = response.payload as any;
-          if (updatedDoc.userId !== userId) return; // verify matching user
+      // Initialize Appwrite Realtime listener for this specific config document
+      const docId = get().configDocId;
+      if (docId) {
+        client.subscribe(
+          `databases.propojos_db.collections.os_configs.documents.${docId}`,
+          (response) => {
+            const updatedDoc = response.payload as any;
+            if (updatedDoc.userId !== userId) return; // verify matching user
 
-          const currentWidgets = JSON.stringify(get().widgets);
-          const currentLayouts = JSON.stringify(get().layouts);
+            const currentWidgets = JSON.stringify(get().widgets);
+            const currentLayouts = JSON.stringify(get().layouts);
 
-          if (updatedDoc.widgets !== currentWidgets || updatedDoc.layouts !== currentLayouts) {
-            set({
-              widgets: JSON.parse(updatedDoc.widgets),
-              layouts: JSON.parse(updatedDoc.layouts)
-            });
+            if (updatedDoc.widgets !== currentWidgets || updatedDoc.layouts !== currentLayouts) {
+              set({
+                widgets: JSON.parse(updatedDoc.widgets),
+                layouts: JSON.parse(updatedDoc.layouts)
+              });
+            }
+
+            const currentConnections = JSON.stringify(useEventStore.getState().connections);
+            if (updatedDoc.connections !== currentConnections) {
+              useEventStore.getState().setConnections(JSON.parse(updatedDoc.connections), false);
+            }
           }
-
-          const currentConnections = JSON.stringify(useEventStore.getState().connections);
-          if (updatedDoc.connections !== currentConnections) {
-            useEventStore.getState().setConnections(JSON.parse(updatedDoc.connections), false);
-          }
-        }
-      );
+        );
+      }
     } catch (e) {
       console.error('Failed to sync from Appwrite:', e);
     }
