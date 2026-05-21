@@ -6,7 +6,7 @@ import './Dashboard.css';
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export function Dashboard() {
-  const { widgets, layouts, updateLayouts } = useOsStore();
+  const { widgets, layouts, updateLayouts, isFreePlacement } = useOsStore();
 
   const handleLayoutChange = (layout: any, allLayouts: Layouts) => {
     updateLayouts(allLayouts as { lg: any[] });
@@ -22,6 +22,7 @@ export function Dashboard() {
         rowHeight={30}
         onLayoutChange={handleLayoutChange}
         draggableHandle=".widget-header"
+        compactType={isFreePlacement ? null : 'vertical'}
       >
         {widgets.map((widget) => (
           <div key={widget.id}>

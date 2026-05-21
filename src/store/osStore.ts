@@ -13,6 +13,8 @@ interface OsState {
   addWidget: (widget: Widget, layout: Layout) => void;
   removeWidget: (id: string) => void;
   updateLayouts: (newLayouts: { lg: Layout[] }) => void;
+  isFreePlacement: boolean;
+  togglePlacementMode: () => void;
 }
 
 export const useOsStore = create<OsState>((set) => ({
@@ -38,5 +40,7 @@ export const useOsStore = create<OsState>((set) => ({
       lg: state.layouts.lg.filter((l) => l.i !== id)
     }
   })),
-  updateLayouts: (newLayouts) => set({ layouts: newLayouts })
+  updateLayouts: (newLayouts) => set({ layouts: newLayouts }),
+  isFreePlacement: true,
+  togglePlacementMode: () => set((state) => ({ isFreePlacement: !state.isFreePlacement }))
 }));
