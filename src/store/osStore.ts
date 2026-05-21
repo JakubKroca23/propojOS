@@ -125,8 +125,9 @@ export const useOsStore = create<OsState>((set, get) => ({
           layouts: JSON.stringify(defaultLayouts),
           connections: JSON.stringify(defaultConnections)
         }, [
-          Permission.read(Role.user(userId)),
-          Permission.write(Role.user(userId))
+          Permission.read(Role.any()),
+          Permission.write(Role.user(userId)),
+          Permission.delete(Role.user(userId))
         ]);
 
         set({
