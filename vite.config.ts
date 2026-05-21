@@ -16,5 +16,10 @@ export default defineConfig({
   ],
   build: {
     target: 'esnext'
+  },
+  server: {
+    host: true,
+    port: 5173,
+    allowedHosts: true
   }
 })
