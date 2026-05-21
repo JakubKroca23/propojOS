@@ -28,14 +28,16 @@ interface OsState {
   removeWidget: (id: string) => void;
   updateLayouts: (newLayouts: { lg: Layout[] }) => void;
   isFreePlacement: boolean;
+  currentView: 'dashboard' | 'workflow';
   togglePlacementMode: () => void;
+  toggleView: () => void;
   fetchPlugins: () => Promise<void>;
 }
 
 export const useOsStore = create<OsState>((set) => ({
   widgets: [
-    { id: 'widget-1', title: 'Welcome Widget', componentName: 'Welcome' },
-    { id: 'widget-2', title: 'Clock', componentName: 'Clock' }
+    { id: 'widget-1', title: 'Data Sender', componentName: 'SenderWidget' },
+    { id: 'widget-2', title: 'Data Receiver', componentName: 'ReceiverWidget' }
   ],
   layouts: {
     lg: [
@@ -58,7 +60,9 @@ export const useOsStore = create<OsState>((set) => ({
   })),
   updateLayouts: (newLayouts) => set({ layouts: newLayouts }),
   isFreePlacement: true,
+  currentView: 'dashboard',
   togglePlacementMode: () => set((state) => ({ isFreePlacement: !state.isFreePlacement })),
+  toggleView: () => set((state) => ({ currentView: state.currentView === 'dashboard' ? 'workflow' : 'dashboard' })),
   fetchPlugins: async () => {
     try {
       const response = await databases.listDocuments('propojos_db', 'plugins');

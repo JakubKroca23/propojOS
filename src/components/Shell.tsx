@@ -10,7 +10,7 @@ interface ShellProps {
 }
 
 export function Shell({ children, onLogout }: ShellProps) {
-  const { isFreePlacement, togglePlacementMode } = useOsStore();
+  const { isFreePlacement, togglePlacementMode, currentView, toggleView } = useOsStore();
 
   const handleSignOut = async () => {
     try {
@@ -26,6 +26,9 @@ export function Shell({ children, onLogout }: ShellProps) {
       <header className="shell-taskbar">
         <div className="shell-brand">PropojOS</div>
         <div className="shell-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+          <button className="sign-out-btn" onClick={toggleView}>
+            {currentView === 'dashboard' ? 'View: Dashboard' : 'View: Workflow'}
+          </button>
           <button className="sign-out-btn" onClick={togglePlacementMode}>
             {isFreePlacement ? 'Mode: Free' : 'Mode: Auto-Compact'}
           </button>

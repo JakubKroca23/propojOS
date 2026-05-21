@@ -5,9 +5,13 @@ import { Shell } from './components/Shell';
 import { Dashboard } from './components/Dashboard';
 import './index.css';
 
+import { WorkflowEditor } from './components/WorkflowEditor';
+import { useOsStore } from './store/osStore';
+
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const { currentView } = useOsStore();
 
   useEffect(() => {
     checkSession();
@@ -34,7 +38,7 @@ function App() {
 
   return (
     <Shell onLogout={() => setIsAuthenticated(false)}>
-      <Dashboard />
+      {currentView === 'dashboard' ? <Dashboard /> : <WorkflowEditor />}
     </Shell>
   );
 }

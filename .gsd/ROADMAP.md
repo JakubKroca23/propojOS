@@ -1,12 +1,12 @@
 # ROADMAP.md
 
-> **Current Phase**: 4
+> **Current Phase**: 5
 > **Milestone**: v1.0
 
 ## Must-Haves (from SPEC)
 - [ ] Grid/dashboard UI shell
 - [x] Native plugin system for custom apps
-- [ ] Visual node-based workflow editor
+- [x] Visual node-based workflow editor
 - [ ] Appwrite integration (Auth, DB, Realtime)
 - [ ] Docker + Traefik deployment
 
@@ -28,7 +28,7 @@
 **Requirements**: REQ-03
 
 ### Phase 4: Workflow Editor & App Communication
-**Status**: ⬜ Not Started
+**Status**: ✅ Complete
 **Objective**: Build the node-based visual workflow editor and establish the global event bus / real-time piping between apps.
 **Requirements**: REQ-04, REQ-05
 

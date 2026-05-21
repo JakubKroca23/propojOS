@@ -3,6 +3,8 @@ import { Responsive, WidthProvider } from 'react-grid-layout/legacy';
 import type { Layouts } from 'react-grid-layout';
 import { useOsStore } from '../store/osStore';
 import { PluginLoader } from './PluginLoader';
+import { SenderWidget } from './widgets/SenderWidget';
+import { ReceiverWidget } from './widgets/ReceiverWidget';
 import './Dashboard.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -41,6 +43,10 @@ export function Dashboard() {
                     moduleName={widget.moduleName} 
                     componentName={widget.remoteComponent} 
                   />
+                ) : widget.componentName === 'SenderWidget' ? (
+                  <SenderWidget id={widget.id} />
+                ) : widget.componentName === 'ReceiverWidget' ? (
+                  <ReceiverWidget id={widget.id} />
                 ) : (
                   <div>{widget.componentName} Widget Loading...</div>
                 )}
