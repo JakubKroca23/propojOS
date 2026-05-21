@@ -1,0 +1,35 @@
+services:
+  traefik:
+    image: "traefik:v3.0"
+    container_name: "traefik"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    networks:
+      - appwrite
+
+  web:
+    build: .
+    container_name: "propojos-web"
+    ports:
+      - "5173:5173"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.web.rule=Host(`propoj.localhost`)"
+      - "traefik.http.services.web.loadbalancer.server.port=5173"
+    networks:
+      - appwrite
+    volumes:
+      - ".:/app"
+      - "/app/node_modules"
+
+networks:
+  appwrite:
+    external: true
