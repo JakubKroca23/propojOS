@@ -6,10 +6,9 @@ import {
   Background,
   useNodesState,
   useEdgesState,
-  addEdge,
-  Connection,
-  Edge
+  addEdge
 } from '@xyflow/react';
+import type { Connection, Edge } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useOsStore } from '../store/osStore';
 import { useEventStore } from '../store/eventStore';
