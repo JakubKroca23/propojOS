@@ -1,0 +1,43 @@
+.shell-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.shell-taskbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  height: 48px;
+  background-color: var(--panel-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.shell-brand {
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: var(--accent-color);
+}
+
+.shell-content {
+  flex: 1;
+  overflow: auto;
+  position: relative;
+}
+
+.sign-out-btn {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.sign-out-btn:hover {
+  background: var(--border-color);
+}

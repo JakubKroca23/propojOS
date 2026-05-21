@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { account } from './lib/appwrite';
 import { Login } from './pages/Login';
+import { Shell } from './components/Shell';
+import { Dashboard } from './components/Dashboard';
 import './index.css';
 
 function App() {
@@ -22,11 +24,6 @@ function App() {
     }
   };
 
-  const handleLogout = async () => {
-    await account.deleteSession('current');
-    setIsAuthenticated(false);
-  };
-
   if (isLoading) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>Loading...</div>;
   }
@@ -36,25 +33,9 @@ function App() {
   }
 
   return (
-    <div style={{ padding: '2rem' }}>
-      <h1>Welcome to PropojOS</h1>
-      <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
-        Your personal native web operating system.
-      </p>
-      <button 
-        onClick={handleLogout}
-        style={{
-          padding: '0.5rem 1rem',
-          backgroundColor: 'var(--panel-bg)',
-          color: 'var(--text-primary)',
-          border: '1px solid var(--border-color)',
-          borderRadius: '6px',
-          cursor: 'pointer'
-        }}
-      >
-        Sign Out
-      </button>
-    </div>
+    <Shell onLogout={() => setIsAuthenticated(false)}>
+      <Dashboard />
+    </Shell>
   );
 }
 
