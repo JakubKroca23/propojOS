@@ -11,7 +11,7 @@ import { useOsStore } from './store/osStore';
 function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const { currentView } = useOsStore();
+  const { currentView, syncFromAppwrite } = useOsStore();
 
   useEffect(() => {
     checkSession();
@@ -19,7 +19,8 @@ function App() {
 
   const checkSession = async () => {
     try {
-      await account.get();
+      const user = await account.get();
+      await syncFromAppwrite(user.$id);
       setIsAuthenticated(true);
     } catch (error) {
       setIsAuthenticated(false);
@@ -33,7 +34,7 @@ function App() {
   }
 
   if (!isAuthenticated) {
-    return <Login onLogin={() => setIsAuthenticated(true)} />;
+    return <Login onLogin={checkSession} />;
   }
 
   return (

@@ -5,6 +5,7 @@ import { useOsStore } from '../store/osStore';
 import { PluginLoader } from './PluginLoader';
 import { SenderWidget } from './widgets/SenderWidget';
 import { ReceiverWidget } from './widgets/ReceiverWidget';
+import { ServerlessWidget } from './widgets/ServerlessWidget';
 import './Dashboard.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -47,6 +48,8 @@ export function Dashboard() {
                   <SenderWidget id={widget.id} />
                 ) : widget.componentName === 'ReceiverWidget' ? (
                   <ReceiverWidget id={widget.id} />
+                ) : widget.componentName === 'ServerlessWidget' ? (
+                  <ServerlessWidget id={widget.id} />
                 ) : (
                   <div>{widget.componentName} Widget Loading...</div>
                 )}

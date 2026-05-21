@@ -1,12 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap');
+
 :root {
-  --bg-color: #0d1117;
-  --panel-bg: #161b22;
-  --text-primary: #e6edf3;
-  --text-secondary: #7d8590;
-  --accent-color: #2f81f7;
-  --border-color: #30363d;
-  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --bg-color: #050814;
+  --bg-gradient: radial-gradient(circle at 50% 0%, #0c1530 0%, #050814 70%);
+  --panel-bg: rgba(10, 16, 36, 0.6);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --panel-border-glow: rgba(56, 189, 248, 0.15);
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  
+  --accent-primary: #38bdf8;
+  --accent-primary-glow: rgba(56, 189, 248, 0.4);
+  --accent-secondary: #818cf8;
+  --accent-success: #34d399;
+  --accent-warning: #fbbf24;
+  --accent-error: #f87171;
+  
+  --font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  --mono-font: 'JetBrains Mono', 'Consolas', monospace;
   --grid-gap: 16px;
+  --glow-shadow: 0 0 20px var(--accent-primary-glow);
 }
 
 * {
@@ -17,14 +32,182 @@
 
 body {
   font-family: var(--font-family);
-  background-color: var(--bg-color);
+  background: var(--bg-color);
+  background-image: var(--bg-gradient);
   color: var(--text-primary);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  margin-bottom: 0.5em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+/* Beautiful custom scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* General Layout Elements with Glassmorphism */
+.shell-container {
+  background: transparent !important;
+}
+
+.shell-taskbar {
+  background-color: rgba(6, 10, 26, 0.7) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--panel-border) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+}
+
+.shell-brand {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--accent-primary) 0%, var(--accent-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.2);
+}
+
+/* Buttons */
+.sign-out-btn {
+  font-family: var(--font-family);
+  font-size: 0.8rem;
   font-weight: 600;
+  background: rgba(255, 255, 255, 0.03) !important;
+  color: var(--text-primary) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: 8px !important;
+  padding: 0.4rem 0.9rem !important;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.sign-out-btn:hover {
+  background: rgba(56, 189, 248, 0.1) !important;
+  border-color: var(--accent-primary) !important;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+  transform: translateY(-1px);
+}
+
+.sign-out-btn:active {
+  transform: translateY(0);
+}
+
+/* React Grid Layout Widget Polish */
+.widget-card {
+  background: var(--panel-bg) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--panel-border) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  overflow: hidden;
+}
+
+.widget-card:hover {
+  border-color: rgba(56, 189, 248, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), 0 0 20px rgba(56, 189, 248, 0.05);
+}
+
+.widget-header {
+  font-family: var(--font-family) !important;
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  color: var(--text-primary) !important;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--panel-border) !important;
+  padding: 0.6rem 1rem !important;
+  margin-bottom: 0 !important;
+}
+
+.widget-content {
+  padding: 1rem !important;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* React Flow styling custom overrides for high-fidelity animations */
+.react-flow__background {
+  background-color: #03050c !important;
+}
+
+.react-flow__controls {
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+  border: 1px solid var(--panel-border) !important;
+  border-radius: 8px !important;
+  overflow: hidden;
+  background: rgba(6, 10, 26, 0.8) !important;
+  backdrop-filter: blur(10px);
+}
+
+.react-flow__controls-button {
+  background: transparent !important;
+  border-bottom: 1px solid var(--panel-border) !important;
+  fill: var(--text-primary) !important;
+  color: var(--text-primary) !important;
+  transition: background 0.2s;
+}
+
+.react-flow__controls-button:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+.react-flow__minimap {
+  background-color: rgba(6, 10, 26, 0.8) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Animated flow edges */
+.react-flow__edge-path {
+  stroke: var(--accent-secondary) !important;
+  stroke-width: 3px !important;
+  filter: drop-shadow(0 0 6px rgba(129, 140, 248, 0.6));
+  stroke-dasharray: 6;
+  animation: flow-dash 1.2s linear infinite;
+}
+
+@keyframes flow-dash {
+  from {
+    stroke-dashoffset: 16;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.react-flow__edge.selected .react-flow__edge-path {
+  stroke: var(--accent-primary) !important;
+  filter: drop-shadow(0 0 8px var(--accent-primary-glow)) !important;
 }

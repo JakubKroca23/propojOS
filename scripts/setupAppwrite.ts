@@ -14,6 +14,7 @@ const headers = {
 async function setup() {
   const dbId = 'propojos_db';
   const collId = 'plugins';
+  const configCollId = 'os_configs';
 
   console.log('Creating database...');
   let res = await fetch(`${endpoint}/databases`, {
@@ -45,6 +46,38 @@ async function setup() {
     });
     if (res.status === 409) console.log(`Attribute ${attr} already exists.`);
     else if (!res.ok) console.error(`Error creating ${attr}:`, await res.text());
+  }
+
+  console.log('Creating os_configs collection...');
+  res = await fetch(`${endpoint}/databases/${dbId}/collections`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({
+      collectionId: configCollId,
+      name: 'OS Configs',
+      permissions: ['read("any")', 'create("any")', 'update("any")', 'delete("any")']
+    })
+  });
+  if (res.status === 409) console.log('OS Configs collection already exists.');
+  else if (!res.ok) throw new Error(await res.text());
+  else console.log('OS Configs collection created.');
+
+  const configAttributes = [
+    { key: 'userId', size: 255 },
+    { key: 'widgets', size: 250000 },
+    { key: 'layouts', size: 250000 },
+    { key: 'connections', size: 250000 }
+  ];
+
+  for (const attr of configAttributes) {
+    console.log(`Creating OS Config attribute: ${attr.key}`);
+    res = await fetch(`${endpoint}/databases/${dbId}/collections/${configCollId}/attributes/string`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify({ key: attr.key, size: attr.size, required: true })
+    });
+    if (res.status === 409) console.log(`Attribute ${attr.key} already exists.`);
+    else if (!res.ok) console.error(`Error creating OS Config attribute ${attr.key}:`, await res.text());
   }
 }
 
