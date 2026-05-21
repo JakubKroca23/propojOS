@@ -27,9 +27,7 @@ interface OsState {
   addWidget: (widget: Widget, layout: Layout) => void;
   removeWidget: (id: string) => void;
   updateLayouts: (newLayouts: { lg: Layout[] }) => void;
-  isFreePlacement: boolean;
   currentView: 'dashboard' | 'workflow';
-  togglePlacementMode: () => void;
   toggleView: () => void;
   fetchPlugins: () => Promise<void>;
 }
@@ -59,9 +57,7 @@ export const useOsStore = create<OsState>((set) => ({
     }
   })),
   updateLayouts: (newLayouts) => set({ layouts: newLayouts }),
-  isFreePlacement: true,
   currentView: 'dashboard',
-  togglePlacementMode: () => set((state) => ({ isFreePlacement: !state.isFreePlacement })),
   toggleView: () => set((state) => ({ currentView: state.currentView === 'dashboard' ? 'workflow' : 'dashboard' })),
   fetchPlugins: async () => {
     try {
