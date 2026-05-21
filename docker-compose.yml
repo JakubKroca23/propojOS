@@ -6,8 +6,18 @@ services:
       - "5173:5173"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.web.rule=Host(`propoj.localhost`)"
-      - "traefik.http.services.web.loadbalancer.server.port=5173"
+      # Secure Router for Production HTTPS (propoj.app)
+      - "traefik.http.routers.propojos-secure.rule=Host(`propoj.app`)"
+      - "traefik.http.routers.propojos-secure.entrypoints=websecure"
+      - "traefik.http.routers.propojos-secure.tls=true"
+      - "traefik.http.routers.propojos-secure.tls.certresolver=acme"
+      - "traefik.http.routers.propojos-secure.service=propojos-service"
+      # Standard Router for HTTP / Local Development
+      - "traefik.http.routers.propojos.rule=Host(`propoj.app`) || Host(`propoj.localhost`)"
+      - "traefik.http.routers.propojos.entrypoints=web"
+      - "traefik.http.routers.propojos.service=propojos-service"
+      # Load Balancer Service Port Mapping
+      - "traefik.http.services.propojos-service.loadbalancer.server.port=5173"
     networks:
       - appwrite
     volumes:
