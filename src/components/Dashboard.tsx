@@ -1,4 +1,5 @@
-import { Responsive, WidthProvider, Layouts } from 'react-grid-layout';
+import { Responsive, WidthProvider } from 'react-grid-layout/legacy';
+import type { Layouts } from 'react-grid-layout';
 import { useOsStore } from '../store/osStore';
 import './Dashboard.css';
 
