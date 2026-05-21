@@ -1,12 +1,18 @@
+import { useEffect } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout/legacy';
 import type { Layouts } from 'react-grid-layout';
 import { useOsStore } from '../store/osStore';
+import { PluginLoader } from './PluginLoader';
 import './Dashboard.css';
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 export function Dashboard() {
-  const { widgets, layouts, updateLayouts, isFreePlacement } = useOsStore();
+  const { widgets, layouts, updateLayouts, isFreePlacement, fetchPlugins } = useOsStore();
+
+  useEffect(() => {
+    fetchPlugins();
+  }, [fetchPlugins]);
 
   const handleLayoutChange = (layout: any, allLayouts: Layouts) => {
     updateLayouts(allLayouts as { lg: any[] });
@@ -29,7 +35,15 @@ export function Dashboard() {
             <div className="widget-card">
               <div className="widget-header">{widget.title}</div>
               <div className="widget-content">
-                {widget.componentName} Widget Loading...
+                {widget.isRemote && widget.url && widget.moduleName && widget.remoteComponent ? (
+                  <PluginLoader 
+                    url={widget.url} 
+                    moduleName={widget.moduleName} 
+                    componentName={widget.remoteComponent} 
+                  />
+                ) : (
+                  <div>{widget.componentName} Widget Loading...</div>
+                )}
               </div>
             </div>
           </div>
