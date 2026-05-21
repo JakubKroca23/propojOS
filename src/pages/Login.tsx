@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { account } from '../lib/appwrite';
+import { OAuthProvider } from 'appwrite';
 import './Login.css';
 
 export function Login({ onLogin }: { onLogin: () => void }) {
@@ -26,7 +27,7 @@ export function Login({ onLogin }: { onLogin: () => void }) {
   const handleGithubOAuth = () => {
     try {
       account.createOAuth2Session(
-        'github',
+        OAuthProvider.Github,
         window.location.origin,
         window.location.origin
       );

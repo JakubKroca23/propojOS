@@ -15,6 +15,15 @@ export function Shell({ children, onLogout }: ShellProps) {
   const handleSignOut = async () => {
     try {
       await account.deleteSession('current');
+      // Unsubscribe from Appwrite Realtime on logout
+      const { realtimeUnsubscribe } = useOsStore.getState();
+      if (realtimeUnsubscribe) {
+        try {
+          realtimeUnsubscribe();
+        } catch (e) {
+          console.error('Failed to unsubscribe from Realtime on logout:', e);
+        }
+      }
       onLogout();
     } catch (e) {
       console.error('Failed to sign out', e);

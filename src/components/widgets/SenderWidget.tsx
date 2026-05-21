@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppOutput } from '../../hooks/useAppEvent';
 
 export function SenderWidget({ id }: { id: string }) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAppInput } from '../../hooks/useAppEvent';
 import { functions } from '../../lib/appwrite';
 

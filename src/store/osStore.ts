@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Layout } from 'react-grid-layout';
+import type { LayoutItem } from 'react-grid-layout';
 import { databases, client, ID } from '../lib/appwrite';
 import { Query, Permission, Role } from 'appwrite';
 import { useEventStore } from './eventStore';
@@ -24,13 +24,14 @@ export interface Plugin {
 
 interface OsState {
   widgets: Widget[];
-  layouts: { lg: Layout[] };
+  layouts: { lg: LayoutItem[] };
   plugins: Plugin[];
   configDocId: string | null;
   userId: string | null;
-  addWidget: (widget: Widget, layout: Layout) => void;
+  realtimeUnsubscribe: (() => void) | null;
+  addWidget: (widget: Widget, layout: LayoutItem) => void;
   removeWidget: (id: string) => void;
-  updateLayouts: (newLayouts: { lg: Layout[] }) => void;
+  updateLayouts: (newLayouts: { lg: LayoutItem[] }) => void;
   currentView: 'dashboard' | 'workflow';
   toggleView: () => void;
   fetchPlugins: () => Promise<void>;
@@ -54,6 +55,7 @@ export const useOsStore = create<OsState>((set, get) => ({
   plugins: [],
   configDocId: null,
   userId: null,
+  realtimeUnsubscribe: null,
   addWidget: (widget, layout) => {
     set((state) => ({
       widgets: [...state.widgets, widget],
@@ -140,7 +142,17 @@ export const useOsStore = create<OsState>((set, get) => ({
       // Initialize Appwrite Realtime listener for this specific config document
       const docId = get().configDocId;
       if (docId) {
-        client.subscribe(
+        // Clean up previous subscription if exists
+        const prevUnsubscribe = get().realtimeUnsubscribe;
+        if (prevUnsubscribe) {
+          try {
+            prevUnsubscribe();
+          } catch (e) {
+            console.error('Error cleaning up previous subscription:', e);
+          }
+        }
+
+        const unsubscribe = client.subscribe(
           `databases.propojos_db.collections.os_configs.documents.${docId}`,
           (response) => {
             const updatedDoc = response.payload as any;
@@ -162,6 +174,8 @@ export const useOsStore = create<OsState>((set, get) => ({
             }
           }
         );
+
+        set({ realtimeUnsubscribe: unsubscribe });
       }
     } catch (e) {
       console.error('Failed to sync from Appwrite:', e);

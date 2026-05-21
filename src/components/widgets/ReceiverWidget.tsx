@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAppInput } from '../../hooks/useAppEvent';
 
 export function ReceiverWidget({ id }: { id: string }) {

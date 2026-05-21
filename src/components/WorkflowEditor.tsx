@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   MiniMap,
@@ -10,7 +10,7 @@ import {
   Handle,
   Position
 } from '@xyflow/react';
-import type { Connection, Edge } from '@xyflow/react';
+import type { Connection, Edge, Node } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 import { useOsStore } from '../store/osStore';
 import { useEventStore } from '../store/eventStore';
@@ -119,8 +119,8 @@ export function WorkflowEditor() {
   const { widgets } = useOsStore();
   const { setConnections } = useEventStore();
   
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
+  const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
 
   // Sync active dashboard widgets to the node canvas dynamically
   useEffect(() => {

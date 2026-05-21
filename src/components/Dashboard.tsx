@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout/legacy';
-import type { Layouts } from 'react-grid-layout';
+import type { Layout, ResponsiveLayouts } from 'react-grid-layout';
 import { useOsStore } from '../store/osStore';
 import { PluginLoader } from './PluginLoader';
 import { SenderWidget } from './widgets/SenderWidget';
@@ -17,7 +17,7 @@ export function Dashboard() {
     fetchPlugins();
   }, [fetchPlugins]);
 
-  const handleLayoutChange = (layout: any, allLayouts: Layouts) => {
+  const handleLayoutChange = (_layout: Layout, allLayouts: ResponsiveLayouts<string>) => {
     updateLayouts(allLayouts as { lg: any[] });
   };
 
