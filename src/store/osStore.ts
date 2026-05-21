@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import type { Layout } from 'react-grid-layout';
 import { databases, client, ID } from '../lib/appwrite';
-import { Query } from 'appwrite';
+import { Query, Permission, Role } from 'appwrite';
 import { useEventStore } from './eventStore';
 
 export interface Widget {
@@ -122,7 +122,10 @@ export const useOsStore = create<OsState>((set, get) => ({
           widgets: JSON.stringify(defaultWidgets),
           layouts: JSON.stringify(defaultLayouts),
           connections: JSON.stringify(defaultConnections)
-        });
+        }, [
+          Permission.read(Role.user(userId)),
+          Permission.write(Role.user(userId))
+        ]);
 
         set({
           configDocId: doc.$id,
