@@ -8,6 +8,9 @@ export default defineConfig({
     react(),
     federation({
       name: 'propojos_host',
+      remotes: {
+        dummy: 'http://localhost/dummy.js' // Forces generation of virtual:__federation__
+      },
       shared: ['react', 'react-dom', 'zustand']
     })
   ],

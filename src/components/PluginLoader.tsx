@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect, useState } from 'react';
-import { __federation_method_setRemote, __federation_method_getRemote } from '__federation__';
+import { __federation_method_setRemote, __federation_method_getRemote } from 'virtual:__federation__';
 
 interface PluginLoaderProps {
   url: string;
