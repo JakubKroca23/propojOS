@@ -1,7 +1,10 @@
 # PROJECT_RULES.md — GSD Canonical Rules
 
-> **Single Source of Truth** for the Get Shit Done methodology.
-> 
+> **Tento repositář je archiv / legacy.** Není to živý produkční zdroj pro https://propoj.app.
+> Canonical repo: https://github.com/JakubKroca23/propoj.app
+>
+> Níže: Single Source of Truth pro metodiku Get Shit Done (ne pro produkční aplikaci).
+>
 > Model-agnostic. All adapters and extensions reference this file.
 
 ---
